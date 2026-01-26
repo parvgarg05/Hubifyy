@@ -1,0 +1,224 @@
+/* 1. Google Fonts & Variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #4f46e5;       /* Indigo 600 */
+    --primary-hover: #4338ca; /* Indigo 700 */
+    --secondary: #6b7280;     /* Gray 500 */
+    --bg-body: #f9fafb;       /* Gray 50 - Lighter background */
+    --bg-card: #ffffff;
+    --text-main: #111827;     /* Gray 900 */
+    --text-muted: #6b7280;    /* Gray 500 */
+    --border: #e5e7eb;        /* Gray 200 */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius: 8px;            /* Slightly more rounded corners */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Applied Inter font */
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; transition: color 0.2s; }
+
+/* 2. Navigation Bar */
+.navbar {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.025em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.nav-link:hover { color: var(--primary); }
+
+/* 3. Hero Section (THE BIG FIX) */
+.hero {
+    /* Modern Gradient Background */
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); 
+    color: white;
+    padding: 6rem 1.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+}
+
+/* 4. Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover { 
+    background-color: var(--primary-hover); 
+    transform: translateY(-1px); 
+}
+
+.btn-secondary {
+    background-color: white;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover { 
+    background-color: var(--bg-body); 
+    color: var(--text-main); 
+}
+
+/* Hero Specific Buttons */
+.hero .btn-primary {
+    background-color: white;
+    color: var(--primary);
+}
+.hero .btn-secondary {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.hero .btn-secondary:hover { background-color: rgba(255,255,255,0.2); }
+
+
+/* 5. Cards & Grid (Events/Clubs) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem 1.5rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: 12px; /* Softer corners */
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); background: white; }
+.card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
+.card-body { padding: 1.5rem; color: var(--text-muted); flex: 1; }
+.card-footer { padding: 1rem 1.5rem; background: #f9fafb; border-top: 1px solid var(--border); }
+
+/* 6. Forms (Login/Register) */
+.auth-container {
+    max-width: 420px;
+    margin: 4rem auto;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-top: 0.25rem;
+    font-size: 1rem;
+}
+.form-input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+/* 7. Footer */
+.footer {
+    margin-top: auto;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* --- Add this to the bottom of style.css --- */
+
+/* Active State for Navigation Links */
+.nav-link.active {
+    color: var(--primary);
+    background-color: rgba(79, 70, 229, 0.1); /* Light purple background */
+    font-weight: 700;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+}

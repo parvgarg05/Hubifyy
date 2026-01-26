@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Events - Hubify{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+        <div>
+            {% if filter_mode and club %}
+            <h1 style="color: var(--primary);">{{ club.name }} Events</h1>
+            <p style="color: var(--text-muted);">Showing specific events for this club.</p>
+            {% else %}
+            <h1>Upcoming Events</h1>
+            <p style="color: var(--text-muted);">Join workshops, hackathons, and meetups.</p>
+            {% endif %}
+        </div>
+
+        {% if filter_mode %}
+        <a href="/events" class="btn btn-secondary">View All Events</a>
+        {% endif %}
+    </div>
+
+    {% if events %}
+    <div class="card-grid">
+        {% for event in events %}
+        <div class="card">
+            <div class="card-header">
+                <span
+                    style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); font-weight: 700;">
+                    {{ event.club.name }}
+                </span>
+                <h3 style="margin-top: 0.5rem;">{{ event.title }}</h3>
+            </div>
+            <div class="card-body">
+                <p style="margin-bottom: 0.5rem; font-weight: 500;">
+                    📅 {{ event.date_time.strftime('%B %d, %Y at %I:%M %p') }}
+                </p>
+
+                {% if event.location %}
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                    📍 {{ event.location }}
+                </p>
+                {% endif %}
+
+                {% if event.description %}
+                <p style="color: var(--text-muted); font-size: 0.95rem;">{{ event.description }}</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <form action="/events/{{ event.id }}/register" method="post">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Register Now</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div
+        style="text-align: center; padding: 4rem; background: white; border-radius: 8px; border: 1px dashed var(--border);">
+        <h3>No events found 😔</h3>
+        <p style="color: var(--text-muted);">This club hasn't posted any upcoming events yet.</p>
+        <a href="/events" class="btn btn-primary" style="margin-top: 1rem;">Browse All Events</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
