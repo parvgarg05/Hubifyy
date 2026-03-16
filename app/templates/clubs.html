@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Clubs - Hubify{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="text-align: center; margin-bottom: 3rem; padding: 2rem 0;">
+        <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;">Student Clubs</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">Find your community and start building.</p>
+    </div>
+
+    <div class="card-grid">
+        {% for club in clubs %}
+        <div class="card">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem;">
+                {% if club.logo_url %}
+                <img src="{{ club.logo_url }}" alt="{{ club.name }}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border);">
+                {% else %}
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: #e0e7ff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">
+                    {{ club.name[:1] }}
+                </div>
+                {% endif %}
+                <h3 style="margin: 0;">{{ club.name }}</h3>
+            </div>
+            
+            <div class="card-body">
+                <p>{{ club.description }}</p>
+            </div>
+
+            <div class="card-footer">
+                <a href="/clubs/{{ club.id }}/events" class="btn btn-secondary" style="width: 100%; text-align: center;">
+                    View Club Events
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

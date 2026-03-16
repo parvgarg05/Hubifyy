@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Club - Hubify{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2 style="margin-bottom: 1.5rem; text-align: center;">✏️ Edit Club</h2>
+    
+    <form action="/admin/clubs/{{ club.id }}/edit" method="post">
+        
+        <div class="form-group">
+            <label class="form-label">Club Name</label>
+            <input type="text" name="name" class="form-input" value="{{ club.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-input" rows="4" style="height: auto;">{{ club.description or "" }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Logo URL</label>
+            <input type="text" name="logo_url" class="form-input" value="{{ club.logo_url or "" }}">
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+            <a href="/admin/dashboard" class="btn btn-secondary" style="flex: 1; text-align: center;">Cancel</a>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Hubify{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <div>
+            <h1>Welcome, {{ user.full_name }}!</h1>
+            <p class="text-muted">Here are the events you have registered for.</p>
+        </div>
+    </div>
+
+    <section style="margin-top: 2rem;">
+        {% if my_events %}
+            <div class="card-grid">
+                {% for event in my_events %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ event.title }}</h3>
+                            <span style="background: #d1fae5; color: #065f46; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
+                                ✅ Confirmed
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <p><strong>📅 Date:</strong> {{ event.date_time.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                                <p><strong>📍 Location:</strong> {{ event.location }}</p>
+                            </div>
+                            <p style="margin-top: 1rem; color: #666;">{{ event.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 4rem; background: #f9fafb; border-radius: 8px; border: 2px dashed #e5e7eb;">
+                <h3>No events yet?</h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">Join the community and start exploring upcoming activities.</p>
+                <a href="/events" class="btn btn-primary">Browse Upcoming Events</a>
+            </div>
+        {% endif %}
+    </section>
+</div>
+
+<script src="{{ url_for('static', path='/js/main.js') }}"></script>
+{% endblock %}

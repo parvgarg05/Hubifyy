@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Event - Hubify{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2 style="margin-bottom: 1.5rem; text-align: center;">✏️ Edit Event</h2>
+    
+    <form action="/admin/events/{{ event.id }}/edit" method="post">
+        
+        <div class="form-group">
+            <label class="form-label">Event Title</label>
+            <input type="text" name="title" class="form-input" value="{{ event.title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-input" rows="3" style="height: auto;">{{ event.description or "" }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Club</label>
+            <select name="club_id" class="form-input" required>
+                {% for club in clubs %}
+                <option value="{{ club.id }}" {% if club.id == event.club_id %}selected{% endif %}>
+                    {{ club.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-input" value="{{ event.location or '' }}" placeholder="e.g. Auditorium or Room 204">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Google Form Link (Optional)</label>
+            <input type="text" name="registration_link" class="form-input" value="{{ event.registration_link or '' }}" placeholder="https://forms.gle/...">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                Students will be sent here after clicking "Register".
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Date & Time</label>
+            <input type="datetime-local" name="date_time" class="form-input" value="{{ event.date_time.strftime('%Y-%m-%dT%H:%M') }}" required>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+            <a href="/admin/dashboard" class="btn btn-secondary" style="flex: 1; text-align: center;">Cancel</a>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
