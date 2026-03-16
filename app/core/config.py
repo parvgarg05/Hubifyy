@@ -9,9 +9,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
-    # Required environment variables
-    DATABASE_URL: str
-    SECRET_KEY: str
+    # Defaults keep app bootable even if env vars are temporarily missing.
+    DATABASE_URL: str = "sqlite:///./college_hub.db"
+    SECRET_KEY: str = "change-this-in-production"
 
     # Defaults
     ALGORITHM: str = "HS256"

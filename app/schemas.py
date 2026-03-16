@@ -6,7 +6,7 @@ Uses Pydantic v2 with ConfigDict for ORM mode.
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr, ConfigDict, Field
 
 
 # ==================== User Schemas ====================
@@ -66,6 +66,11 @@ class ClubOut(ClubBase):
     model_config = ConfigDict(from_attributes=True)
 
 
+class ClubResponse(ClubOut):
+    """Backward-compatible club response schema used by routers."""
+    pass
+
+
 # ==================== Event Schemas ====================
 
 class EventBase(BaseModel):
@@ -87,3 +92,9 @@ class EventOut(EventBase):
     club_id: int
     
     model_config = ConfigDict(from_attributes=True)
+
+
+class ClubDetailResponse(ClubResponse):
+    """Detailed club payload including admin and related events."""
+    admin: Optional[UserOut] = None
+    events: list[EventOut] = Field(default_factory=list)
