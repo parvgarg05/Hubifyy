@@ -1,24 +1,14 @@
 {
-  "buildCommand": "pip install -r requirements.txt",
-  "outputDirectory": "./",
-  "env": {
-    "PYTHONUNBUFFERED": "1"
-  },
   "functions": {
     "api/index.py": {
       "memory": 1024,
-      "maxDuration": 60,
-      "includeFiles": "app/**"
+      "maxDuration": 60
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/static/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.py"
+      "source": "/(.*)",
+      "destination": "/api/index.py"
     }
   ]
 }
