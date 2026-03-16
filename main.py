@@ -1,13 +1,16 @@
 """
 Hubify - College Clubs & Community Hub
 FastAPI Application Entry Point
+
+Works both locally and on Vercel serverless.
 """
 
+import os
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.routers import auth, admin, events
-
 from app.core.deps import get_optional_user
 from app.db.database import get_db 
 from sqlalchemy.orm import Session 
@@ -15,14 +18,9 @@ from fastapi import Depends
 from app.db import models
 from app.db.database import engine
 
-# This line creates the tables if they don't exist
-try:
-    models.Base.metadata.create_all(bind=engine)
-except Exception as e:
-    print(f"Warning: Could not create database tables on startup: {e}")
-    print("Database will be created when needed or on first request.")
+# Determine base directory (works on both local and Vercel)
+BASE_DIR = Path(__file__).resolve().parent
 
-app = FastAPI()
 # Create FastAPI application
 app = FastAPI(
     title="Hubify",
@@ -30,11 +28,24 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# 1. Mount static files (CSS, JS, images)
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Setup static files with proper path handling for Vercel
+static_dir = BASE_DIR / "app" / "static"
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
-# 2. Setup Templates (This tells FastAPI where to find index.html)
-templates = Jinja2Templates(directory="app/templates")
+# Setup templates with proper path handling for Vercel
+templates_dir = BASE_DIR / "app" / "templates"
+templates = Jinja2Templates(directory=str(templates_dir))
+
+# Initialize database on startup (serverless-compatible)
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database tables on startup."""
+    try:
+        models.Base.metadata.create_all(bind=engine)
+        print("✓ Database initialized successfully")
+    except Exception as e:
+        print(f"⚠ Warning: Could not initialize database: {e}")
 
 # Include routers
 app.include_router(auth.router)
